@@ -37,8 +37,9 @@ async function fetchAllCards() {
         }
 
         data.items.forEach((c) => {
-            const cardId = c.public_code ? c.public_code.split("/")[0] : c.id;
+            const cardId = c.public_code ? c.public_code.split("/")[0].replace("*", "s") : c.id;
             const cardType = c.classification?.type || "Unknown"
+            const isHorizontal = cardType === "Battlefield"
 
             cards[cardId] = {
                 id: cardId,
@@ -47,8 +48,8 @@ async function fetchAllCards() {
                         name: c.name,
                         type: cardType,
                         cost: c.attributes?.energy || 0,
-                        image: c.media?.image_url || "",
-                        isHorizontal: cardType === "Battlefield"
+                        image: c.media?.image_url + (isHorizontal ? "?or=90" : "") || "",
+                        isHorizontal: isHorizontal
                     }
                 },
                 name: c.name,
@@ -57,7 +58,7 @@ async function fetchAllCards() {
                 Domain: c.classification?.domain || [],
                 rarity: c.classification?.rarity || "Unknown",
                 Set: [c.set?.label || "Unknown"],
-                isToken: c.classification?.superType === "Token"
+                isToken: c.classification?.supertype === "Token"
             };
         });
 
