@@ -48,7 +48,7 @@ async function fetchAllCards() {
                         name: c.name,
                         type: cardType,
                         cost: c.attributes?.energy || 0,
-                        image: c.media?.image_url + (isHorizontal ? "?or=90" : "") || "",
+                        image: c.media?.image_url + (isHorizontal ? "?or=270" : "") || "",
                         isHorizontal: isHorizontal
                     }
                 },
