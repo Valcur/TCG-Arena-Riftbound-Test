@@ -38,8 +38,11 @@ async function fetchAllCards() {
 
         data.items.forEach((c) => {
             const cardId = c.public_code ? c.public_code.split("/")[0].replace("*", "s") : c.id;
-            const cardType = c.classification?.type || "Unknown"
-            const isHorizontal = cardType === "Battlefield"
+            let cardType = c.classification?.type || "Unknown"
+            if (cardType === "Rune" || cardType === "Battlefield") {
+                cardType += "s"
+            }
+            const isHorizontal = cardType === "Battlefields"
 
             cards[cardId] = {
                 id: cardId,
